@@ -6,7 +6,7 @@ const bodyParser = require("body-parser");
 const router = require("./Route/Routing");
 require ("dotenv").config();
 
-mongoose.connect('mongodb+srv://rajshreya2006:shreyaSingh@cluster0.p2qderp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0/backends');
+mongoose.connect('mongodb+srv://rajshreya2006:shreyaSingh@cluster0.p2qderp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0');
 
 const db = mongoose.connection;
 db.on("error", (err) => {
