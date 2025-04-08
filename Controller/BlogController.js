@@ -13,6 +13,7 @@ const createBlog =async (req, res) => {
 };
 
 // Get All Blogs
+
 const getAllBlogs = async (req, res) => {
   try {
     const blogs = await Blog.find();
@@ -23,6 +24,7 @@ const getAllBlogs = async (req, res) => {
 };
 
 // Get Single Blog
+
 const getBlogById = async (req, res) => {
   try {
     const blog = await Blog.findById(req.params.id);
@@ -34,6 +36,7 @@ const getBlogById = async (req, res) => {
 };
 
 // Update Blog
+
 const updateBlog = async (req, res) => {
   try {
     const updatedBlog = await Blog.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -44,6 +47,7 @@ const updateBlog = async (req, res) => {
 };
 
 // Delete Blog
+
 const deleteBlog = async (req, res) => {
   try {
     await Blog.findByIdAndDelete(req.params.id);

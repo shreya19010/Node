@@ -97,7 +97,7 @@ const loginUser = async (req, res) => {
     }
 };
 
-
+//verify
 
 const verifyToken = (req, res) => {
     const token = req.headers.authorization?.split(' ')[1];
@@ -117,8 +117,63 @@ const verifyToken = (req, res) => {
     }
   };
 
+  // Get All Users
+
+const getAllUsers = async (req, res) => {
+    try {
+        const users = await User.find().select("-password");
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(500).json({ message: "Failed to fetch users", error: error.message });
+    }
+};
+
+// Get User By ID
+
+const getUserById = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id).select("-password");
+        if (!user) return res.status(404).json({ message: "User not found" });
+
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ message: "Error retrieving user", error: error.message });
+    }
+};
+
+// Update User By ID
+
+const updateUserById = async (req, res) => {
+    try {
+        const { username, email } = req.body;
+        const updatedUser = await User.findByIdAndUpdate(
+            req.params.id,
+            { username, email },
+            { new: true, runValidators: true, select: "-password" }
+        );
+
+        if (!updatedUser) return res.status(404).json({ message: "User not found" });
+
+        res.status(200).json({ message: "User updated successfully", user: updatedUser });
+    } catch (error) {
+        res.status(500).json({ message: "Error updating user", error: error.message });
+    }
+};
+
+//  Delete User By ID
+
+const deleteUserById = async (req, res) => {
+    try {
+        const deletedUser = await User.findByIdAndDelete(req.params.id);
+        if (!deletedUser) return res.status(404).json({ message: "User not found" });
+
+        res.status(200).json({ message: "User deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ message: "Error deleting user", error: error.message });
+    }
+};
 
 
-module.exports = { registerUser, loginUser, verifyToken };
+module.exports = { registerUser, loginUser, verifyToken, getAllUsers, getUserById, updateUserById, deleteUserById };
 
 
